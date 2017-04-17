@@ -371,15 +371,15 @@ class World(event.Dispatcher):
             if obj:
                 obj._handle_located_object_state(object_state)
             updated_objects.add(object_state.objectID)
-        # verify that all objects not received have invalidated poses
+        # ensure that all objects not received have invalidated poses
         for id, obj in self._objects.items():
             if (id not in updated_objects) and obj.pose.is_valid:
-                logger.warn("Object %s still has a valid pose but wasn't part of located_object_state", obj)
+                obj.pose.invalidate()
 
     def _recv_msg_robot_deleted_located_object(self, evt, *, msg):
         obj = self._objects.get(msg.objectID)
         if obj is None:
-            logger.warn("Ignoring deleted_located_object for unknown object ID %s", msg.objectID)
+            logger.warning("Ignoring deleted_located_object for unknown object ID %s", msg.objectID)
         else:
             logger.info("Invalidating pose for deleted located object %s" % obj)
             obj.pose.invalidate()

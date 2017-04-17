@@ -38,7 +38,7 @@ online documentation.  They will be detected as :class:`CustomObject` instances.
 
 # __all__ should order by constants, event classes, other classes, functions.
 __all__ = ['LightCube1Id', 'LightCube2Id', 'LightCube3Id', 'OBJECT_VISIBILITY_TIMEOUT',
-           'EvtObjectAppeared', 'EvtObjectAvailable',
+           'EvtObjectAppeared',
            'EvtObjectConnectChanged', 'EvtObjectConnected',
            'EvtObjectDisappeared', 'EvtObjectLocated',
            'EvtObjectMoving', 'EvtObjectMovingStarted', 'EvtObjectMovingStopped',
@@ -335,8 +335,8 @@ class ObservableObject(ObservableElement):
         # as a response to a RequestLocatedObjectStates message
         if (self.last_observed_robot_timestamp and
             (self.last_observed_robot_timestamp > object_state.lastObservedTimestamp)):
-            logger.warn("Ignoring old located object_state=%s obj=%s (last_observed_robot_timestamp=%s)",
-                         object_state, self, self.last_observed_robot_timestamp)
+            logger.warning("Ignoring old located object_state=%s obj=%s (last_observed_robot_timestamp=%s)",
+                           object_state, self, self.last_observed_robot_timestamp)
             return
 
         changed_fields = {'last_observed_robot_timestamp', 'pose'}
