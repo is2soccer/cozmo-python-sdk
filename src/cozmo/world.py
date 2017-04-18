@@ -374,6 +374,9 @@ class World(event.Dispatcher):
     def _recv_msg_object_power_level(self, evt, *, msg):
         self._dispatch_object_event(evt, msg)
 
+    def _recv_msg_object_connection_state(self, evt, *, msg):
+        self._dispatch_object_event(evt, msg)
+
     def _recv_msg_connected_object_states(self, evt, *, msg):
         # This is received on startup as a response to RequestConnectedObjects.
         for object_state in msg.objects:
