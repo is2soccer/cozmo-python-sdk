@@ -320,6 +320,7 @@ class ObservableObject(ObservableElement):
         # triggered when engine sends a ConnectedObjectStates message
         # as a response to a RequestConnectedObjects message
         self._pose = util.Pose._create_default()
+        self.is_connected = True
         self.dispatch_event(EvtObjectConnected, obj=self)
 
     def _handle_located_object_state(self, object_state):
@@ -449,7 +450,7 @@ class LightCube(ObservableObject):
         self.is_moving = False
 
         #: bool: True if the cube is currently connected to the robot via radio.
-        self.is_connected = None
+        self.is_connected = False
 
     def _repr_values(self):
         super_values = super()._repr_values()
@@ -556,6 +557,10 @@ class LightCube(ObservableObject):
 
     def _recv_msg_object_connection_state(self, evt, *, msg):
         if self.is_connected != msg.connected:
+            if msg.connected:
+                logger.info("Object connected: %s", self)
+            else:
+                logger.info("Object disconnected: %s", self)
             self.is_connected = msg.connected
             self.dispatch_event(EvtObjectConnectChanged, obj=self,
                                 connected=self.is_connected)
