@@ -117,7 +117,7 @@ class World(event.Dispatcher):
         self.custom_objects = {}
 
         #: :class:`CameraImage`: The latest image received, or None.
-        self.latest_image = None
+        self.latest_image = None  # type: CameraImage
 
         self.light_cubes = {}
 
@@ -287,6 +287,29 @@ class World(event.Dispatcher):
             int: The number of pets currently visible.
         '''
         return self._visible_pet_count
+
+    def get_light_cube(self, cube_id):
+        """Returns the light cube with the given cube ID
+                
+        Args:
+            cube_id (int): The light cube ID - should be one of
+                :attr:`~cozmo.objects.LightCube1Id`,
+                :attr:`~cozmo.objects.LightCube2Id` and
+                :attr:`~cozmo.objects.LightCube3Id`. Note: the cube_id is not
+                the same thing as the object_id.
+        Returns:
+            :class:`cozmo.objects.LightCube`: The LightCube object with that cube_id
+        
+        Raises:
+            :class:`ValueError` if the cube_id is invalid.
+        """
+        if cube_id not in {objects.LightCube1Id, objects.LightCube2Id, objects.LightCube3Id}:
+            raise ValueError("Invalid cube_id %s" % cube_id)
+        cube = self.light_cubes.get(cube_id)
+        # Only return the cube if it has an object_id
+        if cube.object_id is not None:
+            return cube
+        return None
 
     #### Private Event Handlers ####
 
