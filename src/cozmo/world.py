@@ -858,7 +858,7 @@ class World(event.Dispatcher):
                                       the origin_id of Cozmo.
 
         Returns:
-            A :class:`cozmo.object.FixedCustomObject` instance with the specified dimensions and pose.
+            A :class:`cozmo.objects.FixedCustomObject` instance with the specified dimensions and pose.
         '''
         # Override the origin of the pose to be the same as the robot's. This will make sure they are in
         # the same space in the engine every time.

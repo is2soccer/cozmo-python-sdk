@@ -622,6 +622,13 @@ class CustomObject(ObservableObject):
 
     See parent class :class:`ObservableObject` for additional properties
     and methods.
+    
+    These objects are created automatically by the engine when Cozmo observes
+    an object with custom markers. For Cozmo to see one of these you must first
+    define an object with custom markers, via one of the following methods:
+    :meth:`~cozmo.world.World.define_custom_box`.
+    :meth:`~cozmo.world.World.define_custom_cube`, or
+    :meth:`~cozmo.world.World.define_custom_wall`
     '''
 
     def __init__(self, conn, world, object_type,
@@ -833,6 +840,8 @@ class FixedCustomObject():
     The position is static in Cozmo's world view; once instantiated, these
     objects never move. This could be used to make Cozmo aware of objects and
     know to plot a path around them even when they don't have any markers.
+    
+    To create these use :meth:`~cozmo.world.World.create_custom_fixed_object`
     '''
 
     is_visible = False
